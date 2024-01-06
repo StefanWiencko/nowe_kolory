@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 
-public class NoMovieFoundException extends RuntimeException {
+public class UnableToFetchDataException extends RuntimeException {
     private final String imdbID;
 
-    public NoMovieFoundException(String msg, String imdbID) {
+    public UnableToFetchDataException(String msg, String imdbID) {
         super(msg);
         this.imdbID = imdbID;
     }

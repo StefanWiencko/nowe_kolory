@@ -20,14 +20,20 @@ public class MovieEntity {
 
     @JsonProperty("Title")
     private String title;
+
     @JsonProperty("Plot")
     private String plot;
+
     @JsonProperty("Genre")
     private String genre;
+
     @JsonProperty("Director")
     private String director;
+
     @JsonProperty("Poster")
     private String poster;
+
+    private boolean isFavourite;
 
     public boolean isEmpty() {
         return imdbID == null && title == null && plot == null && genre == null && director == null && poster == null;
