@@ -1,5 +1,6 @@
 package com.turgor.nowe_kolory.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "movies")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MovieEntity {
 
     @Id
@@ -33,10 +35,9 @@ public class MovieEntity {
     @JsonProperty("Poster")
     private String poster;
 
-    private boolean isFavourite;
+    private Boolean isFavourite;
 
-    public boolean isEmpty() {
-        return imdbID == null && title == null && plot == null && genre == null && director == null && poster == null;
+    public boolean checkIsFavourite() {
+        return Boolean.TRUE.equals(isFavourite);
     }
-
 }
