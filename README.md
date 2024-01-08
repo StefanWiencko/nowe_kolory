@@ -3,6 +3,7 @@
     ./mvnw spring-boot:run
 
 #### App runs on port 8080
+#### Make sure to add your api key to application.properties in project root
 
 ## Run the tests
 
