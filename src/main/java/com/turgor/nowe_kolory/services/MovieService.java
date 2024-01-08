@@ -11,13 +11,5 @@ import java.util.Optional;
 public interface MovieService {
 
     Mono<MovieEntity> findOne(String imdbID) throws JsonProcessingException;
-
-    MovieEntity addFavourite(MovieEntity movieEntity);
-
-    List<MovieEntity> findAllFavourites();
-
-    Optional<MovieEntity> findOneFavourite(String imdbID);
-
-    boolean isExists(String imdbID);
-
+    
 }

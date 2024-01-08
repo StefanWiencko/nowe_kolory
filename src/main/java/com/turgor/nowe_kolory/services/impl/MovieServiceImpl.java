@@ -42,7 +42,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public Mono<MovieEntity> findOne(String imdbID) {
-        Optional<MovieEntity> savedEntity = findOneFavourite(imdbID);
+        Optional<MovieEntity> savedEntity = movieRepository.findById(imdbID);
+
         return savedEntity.map(Mono::just)
                 .orElseGet(() -> webClient.get()
                         .uri(uriBuilder -> uriBuilder
@@ -60,7 +61,6 @@ public class MovieServiceImpl implements MovieService {
                         .bodyToMono(String.class)
                         .flatMap(responseBody -> {
                             if (isErrorResponse(responseBody)) {
-                                System.out.println(responseBody);
                                 throw new UnableToFetchMovieException("Error in API response", convertToEntity(responseBody, ApiError.class), HttpStatus.BAD_REQUEST);
                             } else {
                                 return Mono.just(convertToEntity(responseBody, MovieEntity.class));
@@ -68,44 +68,18 @@ public class MovieServiceImpl implements MovieService {
                         }));
     }
 
+
     private <T> T convertToEntity(String responseBody, Class<T> targetClass) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
 
             return objectMapper.readValue(responseBody, targetClass);
-        } catch (JsonMappingException e) {
-            throw new RuntimeException(e);
         } catch (JsonProcessingException e) {
-            throw new InvalidJsonResponseException("Error parsing string to json", responseBody, HttpStatus.BAD_REQUEST);
+            throw new InvalidJsonResponseException("Error parsing response to json", responseBody, HttpStatus.BAD_REQUEST);
         }
     }
 
     private boolean isErrorResponse(String responseBody) {
         return responseBody.contains("\"Response\":\"False\"");
-    }
-
-    @Override
-    public MovieEntity addFavourite(MovieEntity movieEntity) {
-        movieEntity.setIsFavourite(true);
-        return movieRepository.save(movieEntity);
-    }
-
-    @Override
-    public Optional<MovieEntity> findOneFavourite(String imdbID) {
-        return movieRepository.findById(imdbID);
-    }
-
-    @Override
-    public boolean isExists(String imdbID) {
-        return movieRepository.existsById(imdbID);
-    }
-
-    @Override
-    public List<MovieEntity> findAllFavourites() {
-        return StreamSupport.stream(movieRepository
-                                .findByIsFavouriteTrue()
-                                .spliterator(),
-                        false)
-                .collect(Collectors.toList());
     }
 }

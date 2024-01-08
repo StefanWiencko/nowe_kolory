@@ -15,7 +15,6 @@ public final class TestDataUtil {
                 .genre("Action, Crime, Drama")
                 .director("Ram Gopal Varma")
                 .poster("https://m.media-amazon.com/images/M/MV5BYjRmNzI1MzAtYmI0NS00NmRmLTk0Y2ItYWRjMDY2ZmMxNzQ2XkEyXkFqcGdeQXVyNjQ2MjQ5NzM@._V1_SX300.jpg")
-                .isFavourite(true)
                 .build();
     }
 
@@ -27,7 +26,6 @@ public final class TestDataUtil {
                 .genre("Documentary")
                 .director("Peter Heller")
                 .poster("N/A")
-                .isFavourite(true)
                 .build();
     }
 }

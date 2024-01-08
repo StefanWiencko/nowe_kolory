@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class MovieMapperImpl implements Mapper<MovieEntity, MovieDto> {
 
-    private ModelMapper modelMapper;
+    private final ModelMapper modelMapper;
 
     public MovieMapperImpl(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
